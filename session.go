@@ -108,7 +108,10 @@ func (m *milterSession) Process(msg *Message) (Response, error) {
 		m.headers = nil
 		m.macros = nil
 		// do not send response
-		return m.milter.Abort(), nil
+		return func() Response {
+			m.milter.Abort()
+			return nil
+		}(), nil
 
 	case 'B':
 		// body chunk
@@ -213,7 +216,10 @@ func (m *milterSession) Process(msg *Message) (Response, error) {
 
 	case 'Q':
 		// client requested session close
-		return m.milter.Quit(), errCloseSession
+		return func() Response {
+			m.milter.Quit()
+			return nil
+		}, errCloseSession
 
 	case 'R':
 		// envelope to address
