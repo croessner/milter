@@ -219,7 +219,7 @@ func (m *milterSession) Process(msg *Message) (Response, error) {
 		return func() Response {
 			m.milter.Quit()
 			return nil
-		}, errCloseSession
+		}(), errCloseSession
 
 	case 'R':
 		// envelope to address
