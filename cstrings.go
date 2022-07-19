@@ -9,11 +9,14 @@ import (
 const null = "\x00"
 
 // DecodeCStrings splits a C style strings into a Go slice
-func decodeCStrings(data []byte) []string {
+func decodeCStrings(data []byte) (str []string) {
 	if len(data) == 0 {
 		return nil
 	}
-	return strings.Split(strings.Trim(string(data), null), null)
+	str = strings.Split(string(data), NULL)
+	// return strings.Split(strings.Trim(string(data), null), null)
+	// Issue: https://github.com/phalaaxx/milter/issues/3#issuecomment-385017611
+	return str[:len(str) - 1]
 }
 
 // ReadCString reads and returns a C style string from []byte
