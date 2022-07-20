@@ -13,7 +13,7 @@ func decodeCStrings(data []byte) (str []string) {
 	if len(data) == 0 {
 		return nil
 	}
-	str = strings.Split(string(data), NULL)
+	str = strings.Split(string(data), null)
 	// return strings.Split(strings.Trim(string(data), null), null)
 	// Issue: https://github.com/phalaaxx/milter/issues/3#issuecomment-385017611
 	return str[:len(str) - 1]
